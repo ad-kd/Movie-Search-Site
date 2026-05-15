@@ -1,0 +1,41 @@
+.favorites {
+    width: 100%;
+}
+
+.favorites h2 {
+    margin-bottom: 3rem;
+    text-align: center;
+    font-size: 3rem;
+    font-weight: 800;
+    background: linear-gradient(90deg, #646cff, #ff64f2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.favorites-empty {
+    text-align: center;
+    padding: 6rem 2rem;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    margin: 4rem auto;
+    max-width: 600px;
+}
+
+.favorites-empty h2 {
+    margin-bottom: 1rem;
+    font-size: 2rem;
+    color: #fff;
+}
+
+.favorites-empty p {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 1.1rem;
+}
+
+@media (max-width: 600px) {
+    .favorites h2 {
+        font-size: 2rem;
+    }
+}

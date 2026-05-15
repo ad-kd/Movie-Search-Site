@@ -1,0 +1,117 @@
+.home {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.welcome-section {
+    text-align: center;
+    margin-top: 4rem;
+    margin-bottom: 2rem;
+}
+
+.welcome-title {
+    font-size: 4rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    background: linear-gradient(90deg, #fff, #646cff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.welcome-subtitle {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.6);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.search-form {
+    width: 100%;
+    max-width: 600px;
+    margin: 2rem 0 4rem;
+    display: flex;
+    gap: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.5rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
+}
+
+.search-form:focus-within {
+    border-color: #646cff;
+    box-shadow: 0 0 20px rgba(100, 108, 255, 0.2);
+}
+
+.search-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: white;
+    padding: 0.8rem 1rem;
+    font-size: 1.1rem;
+    outline: none;
+}
+
+.search-input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.search-button {
+    background: #646cff;
+    color: white;
+    padding: 0.8rem 2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.search-button:hover {
+    background: #535bf2;
+    transform: scale(1.05);
+}
+
+.movies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 2.5rem;
+    width: 100%;
+}
+
+.loading, .error-message {
+    font-size: 1.5rem;
+    color: #646cff;
+    margin-top: 4rem;
+    font-weight: 600;
+}
+
+@media (max-width: 600px) {
+    .search-form {
+        flex-direction: column;
+        background: transparent;
+        border: none;
+        padding: 0;
+    }
+    
+    .welcome-title {
+        font-size: 2.5rem;
+    }
+
+    .welcome-subtitle {
+        font-size: 1rem;
+    }
+    
+    .search-input {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .movies-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 1.5rem;
+    }
+}
