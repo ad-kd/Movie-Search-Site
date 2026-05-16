@@ -5,6 +5,14 @@
     cursor: pointer;
 }
 
+.movie-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
 .movie-poster {
     position: relative;
     aspect-ratio: 2/3;
