@@ -1,15 +1,21 @@
 import "../css/MovieCard.css"
 import { useMovieContext } from "../contexts/MovieContext"
+import { useToast } from "../contexts/ToastContext"
 import SpotlightCard from "./reactbits/SpotlightCard"
 
 function MovieCard({movie}) {
     const {isFavorite, addToFavorites, removeFromFavorites} = useMovieContext()
+    const { showToast } = useToast()
     const favorite = isFavorite(movie.id)
 
     function onFavoriteClick(e) {
         e.preventDefault()
-        if (favorite) removeFromFavorites(movie.id)
-        else addToFavorites(movie)
+        if (favorite) {
+            removeFromFavorites(movie.id)
+        } else {
+            addToFavorites(movie)
+            showToast(`${movie.title} added to favorites`, "success")
+        }
     }
 
     return (

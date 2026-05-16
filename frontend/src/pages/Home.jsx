@@ -11,37 +11,37 @@ function Home() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const loadPopularMovies = async () => {
-      try {
+    const search = async () => {
+      if (!searchQuery.trim()) {
         const popularMovies = await getPopularMovies();
         setMovies(popularMovies);
+        setError(null);
+        setLoading(false);
+        return;
+      }
+
+      setLoading(true);
+      try {
+        const searchResults = await searchMovies(searchQuery);
+        setMovies(searchResults);
+        setError(null);
       } catch (err) {
         console.log(err);
-        setError("Failed to load movies...");
+        setError("Failed to search movies...");
       } finally {
         setLoading(false);
       }
     };
 
-    loadPopularMovies();
-  }, []);
+    const debounceTimer = setTimeout(() => {
+      search();
+    }, 500);
 
-  const handleSearch = async (e) => {
+    return () => clearTimeout(debounceTimer);
+  }, [searchQuery]);
+
+  const handleSearch = (e) => {
     e.preventDefault();
-    if (!searchQuery.trim()) return
-    if (loading) return
-
-    setLoading(true)
-    try {
-        const searchResults = await searchMovies(searchQuery)
-        setMovies(searchResults)
-        setError(null)
-    } catch (err) {
-        console.log(err)
-        setError("Failed to search movies...")
-    } finally {
-        setLoading(false)
-    }
   };
 
 {/* Author: adkd */}
@@ -73,9 +73,13 @@ function Home() {
         <div className="loading">Loading...</div>
       ) : (
         <div className="movies-grid">
-          {movies.map((movie) => (
-            <MovieCard movie={movie} key={movie.id} />
-          ))}
+          {movies.length > 0 ? (
+            movies.map((movie) => (
+              <MovieCard movie={movie} key={movie.id} />
+            ))
+          ) : (
+            <div className="no-results">No movies found...</div>
+          )}
         </div>
       )}
     </div>

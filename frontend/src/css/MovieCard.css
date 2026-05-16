@@ -95,12 +95,23 @@
     margin: 0;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     .movie-info {
         padding: 0.8rem 0.5rem;
     }
     
     .movie-info h3 {
         font-size: 1rem;
+    }
+
+    .movie-overlay {
+        opacity: 1;
+        background: linear-gradient(transparent, rgba(0,0,0,0.4));
+    }
+
+    .favorite-btn {
+        background: rgba(0,0,0,0.6);
+        opacity: 1;
+        transform: scale(1);
     }
 }
