@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getMovieDetails } from "../services/api";
 import { useToast } from "../contexts/ToastContext";
-import { ExternalLink, Star, Calendar, Clock, ArrowLeft } from "lucide-react";
+import { useMovieContext } from "../contexts/MovieContext";
+import { ExternalLink, Star, Calendar, Clock, ArrowLeft, Heart } from "lucide-react";
 import "../css/MovieDetails.css";
 
 function MovieDetails() {
@@ -11,6 +12,19 @@ function MovieDetails() {
   const [movie, setMovie] = useState(null);
   const [loading, setLoading] = useState(true);
   const { showToast } = useToast();
+  const { isFavorite, addToFavorites, removeFromFavorites } = useMovieContext();
+  
+  const favorite = movie ? isFavorite(movie.id) : false;
+
+  const onFavoriteClick = (e) => {
+    e.preventDefault();
+    if (favorite) {
+      removeFromFavorites(movie.id);
+    } else {
+      addToFavorites(movie);
+      showToast(`${movie.title} added to favorites`, "success");
+    }
+  };
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -74,16 +88,26 @@ function MovieDetails() {
             <p>{movie.overview}</p>
           </div>
           
-          {movie.imdb_id && (
-            <a 
-              href={`https://www.imdb.com/title/${movie.imdb_id}`} 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="imdb-link"
+          <div className="movie-details-actions">
+            {movie.imdb_id && (
+              <a 
+                href={`https://www.imdb.com/title/${movie.imdb_id}`} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="imdb-link"
+              >
+                View on IMDB <ExternalLink size={18} />
+              </a>
+            )}
+            
+            <button 
+              className={`details-fav-btn ${favorite ? "active" : ""}`} 
+              onClick={onFavoriteClick}
             >
-              View on IMDB <ExternalLink size={18} />
-            </a>
-          )}
+              <Heart size={20} fill={favorite ? "currentColor" : "none"} />
+              {favorite ? "Remove from Favorites" : "Add to Favorites"}
+            </button>
+          </div>
         </div>
       </div>
     </div>

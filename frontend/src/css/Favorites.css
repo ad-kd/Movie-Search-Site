@@ -15,27 +15,93 @@
 .favorites-empty {
     text-align: center;
     padding: 6rem 2rem;
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(10px);
+    background: rgba(15, 15, 15, 0.4);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 20px;
+    border-radius: 32px;
     margin: 4rem auto;
     max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    animation: slideUp 0.6s ease-out;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.empty-icon-container {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.empty-icon.film {
+    color: #646cff;
+    opacity: 0.8;
+}
+
+.empty-icon.search {
+    position: absolute;
+    bottom: -5px;
+    right: -10px;
+    color: #ff64f2;
+    background: #0a0a0a;
+    border-radius: 50%;
+    padding: 4px;
 }
 
 .favorites-empty h2 {
-    margin-bottom: 1rem;
+    margin: 0;
     font-size: 2rem;
+    font-weight: 700;
     color: #fff;
+    letter-spacing: -0.02em;
 }
 
 .favorites-empty p {
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.6);
     font-size: 1.1rem;
+    line-height: 1.6;
+    max-width: 400px;
+    margin: 0;
+}
+
+.explore-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    background: linear-gradient(135deg, #646cff, #4a54ff);
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-top: 1rem;
+    box-shadow: 0 4px 15px rgba(100, 108, 255, 0.3);
+}
+
+.explore-btn:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(100, 108, 255, 0.4);
+    background: linear-gradient(135deg, #747bff, #5a64ff);
+}
+
+.explore-btn:active {
+    transform: translateY(-2px);
 }
 
 @media (max-width: 600px) {
     .favorites h2 {
         font-size: 2rem;
+    }
+    
+    .favorites-empty {
+        margin: 2rem 1rem;
+        padding: 4rem 1.5rem;
     }
 }

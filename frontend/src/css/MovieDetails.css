@@ -122,6 +122,13 @@
     color: rgba(255, 255, 255, 0.7);
 }
 
+.movie-details-actions {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
 .imdb-link {
     display: inline-flex;
     align-items: center;
@@ -132,10 +139,37 @@
     border-radius: 12px;
     font-weight: 700;
     text-decoration: none;
-    align-self: flex-start;
     transition: all 0.3s ease;
-    margin-top: 1rem;
     box-shadow: 0 4px 15px rgba(245, 197, 24, 0.3);
+}
+
+.details-fav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 600;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.details-fav-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-3px);
+}
+
+.details-fav-btn.active {
+    background: rgba(255, 71, 87, 0.1);
+    border-color: rgba(255, 71, 87, 0.3);
+    color: #ff4757;
+}
+
+.details-fav-btn.active:hover {
+    background: rgba(255, 71, 87, 0.15);
 }
 
 .imdb-link:hover {
