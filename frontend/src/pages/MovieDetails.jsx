@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getMovieDetails } from "../services/api";
+import { getMovieDetails, getMovieProviders } from "../services/api";
 import { useToast } from "../contexts/ToastContext";
 import { useMovieContext } from "../contexts/MovieContext";
 import { ExternalLink, Star, Calendar, Clock, ArrowLeft, Heart } from "lucide-react";
@@ -10,6 +10,7 @@ function MovieDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [movie, setMovie] = useState(null);
+  const [providers, setProviders] = useState(null);
   const [loading, setLoading] = useState(true);
   const { showToast } = useToast();
   const { isFavorite, addToFavorites, removeFromFavorites } = useMovieContext();
@@ -31,6 +32,14 @@ function MovieDetails() {
       try {
         const data = await getMovieDetails(id);
         setMovie(data);
+        
+        const providersData = await getMovieProviders(id);
+        if (providersData && Object.keys(providersData).length > 0) {
+          const providerInfo = providersData.US || providersData[Object.keys(providersData)[0]];
+          setProviders(providerInfo || {});
+        } else {
+          setProviders({});
+        }
       } catch (err) {
         console.error(err);
         showToast("Failed to load movie details", "error");
@@ -108,6 +117,55 @@ function MovieDetails() {
               {favorite ? "Remove from Favorites" : "Add to Favorites"}
             </button>
           </div>
+
+          {providers !== null && (
+            <div className="streaming-section">
+              <h4 className="streaming-title">STREAMING</h4>
+              {providers.flatrate || providers.rent || providers.buy ? (
+                <div className="streaming-providers">
+                  {(providers.flatrate || providers.rent || providers.buy).slice(0, 3).map((provider) => {
+                    const getProviderLink = (providerName, movieTitle) => {
+                      const titleQuery = encodeURIComponent(movieTitle);
+                      const name = providerName.toLowerCase();
+                      
+                      let domain = "";
+                      if (name.includes('netflix')) domain = 'netflix.com';
+                      else if (name.includes('amazon') || name.includes('prime')) domain = 'primevideo.com';
+                      else if (name.includes('disney')) domain = 'disneyplus.com';
+                      else if (name.includes('hulu')) domain = 'hulu.com';
+                      else if (name.includes('apple')) domain = 'tv.apple.com';
+                      else if (name.includes('hbo') || name.includes('max')) domain = 'max.com';
+                      else if (name.includes('peacock')) domain = 'peacocktv.com';
+                      else if (name.includes('paramount')) domain = 'paramountplus.com';
+                      else domain = 'justwatch.com';
+
+                      // Use DuckDuckGo "I'm Feeling Lucky" (\) for direct navigation
+                      return `https://duckduckgo.com/?q=%5C${titleQuery}+site%3A${domain}`;
+                    };
+
+                    return (
+                      <a
+                        key={provider.provider_id}
+                        href={getProviderLink(provider.provider_name, movie.title)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="provider-link"
+                        title={provider.provider_name}
+                      >
+                        <img
+                          src={`https://image.tmdb.org/t/p/w200${provider.logo_path}`}
+                          alt={provider.provider_name}
+                          className="provider-logo"
+                        />
+                      </a>
+                    );
+                  })}
+                </div>
+              ) : (
+                <p className="no-streaming-text">This ain't release in OTT</p>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>
